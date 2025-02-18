@@ -13,7 +13,6 @@ public class Etape1 {
     public Etape1(String texte) {
         this.texte = texte;
         calculerFrequences();
-        trierFrequences();
     }
     
     private void calculerFrequences() {
@@ -22,27 +21,8 @@ public class Etape1 {
         }
     }
 
-    private void trierFrequences() {
-        List<Map.Entry<Character, Integer>> list = new ArrayList<>(Frequences.entrySet());
-        Collections.sort(list, new Comparator<Map.Entry<Character, Integer>>() {
-            public int compare(Map.Entry<Character, Integer> o1, Map.Entry<Character, Integer> o2) {
-                int valueCompare = o1.getValue().compareTo(o2.getValue());
-                if (valueCompare != 0) {
-                    return valueCompare;
-                } else {
-                    return o1.getKey().compareTo(o2.getKey());
-                }
-            }
-        });
-
-        Frequences.clear();
-        for (Map.Entry<Character, Integer> entry : list) {
-            Frequences.put(entry.getKey(), entry.getValue());
-        }
-    }
-
     public static void main(String[] args) {
-        Etape1 etape1 = new Etape1("Hello World!");
-        System.out.println("Fréquences des caractères triées : " + etape1.Frequences);
+        Etape1 etape1 = new Etape1("Bonjour, monde!");
+        System.out.println("Fréquences des caractères : " + etape1.Frequences);
     }
 }
