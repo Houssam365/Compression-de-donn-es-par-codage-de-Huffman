@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Etape1 {
+public class Main {
 
     public static int etape1(String[] args) {
         // Chaîne de caractères à trier
-        String str = "bbcdffddaaeefaaffafebccbbeffaadcdabaab";
+        String str = "this is an example of a huffman tree";
 
         // Convertir la chaîne en tableau de caractères
         char[] charArray = str.toCharArray();
