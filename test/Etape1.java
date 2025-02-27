@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Etape1 {
-    public static int etape1(String inputFilename) {
+    public static int etape1(String inputFilename, String outputFilename) {
         StringBuilder str = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(inputFilename))) {
             String line;
@@ -49,7 +49,8 @@ public class Etape1 {
         }
         
         // Écrire les lignes triées et uniques dans un fichier
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("sorted_characters.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilename))) {
+            writer.write(frequencyMap.size() + "\n"); // Écrire la taille de l'alphabet
             for (String line : sortedLines) {
                 writer.write(line);
                 writer.newLine();
@@ -63,11 +64,11 @@ public class Etape1 {
     }
 
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: java Etape1 <input_file>");
+        if (args.length != 2) {
+            System.out.println("Usage: java Etape1 <input_file> <output_file>");
             return;
         }
-        int distinctCharacterCount = etape1(args[0]);
+        int distinctCharacterCount = etape1(args[0], args[1]);
         System.out.println("Nombre de caractères distincts : " + distinctCharacterCount);
     }
 }

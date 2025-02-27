@@ -1,5 +1,7 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class Etape4_5 {
     }
 
     public static double calculateCompressionRate(String text, Map<Character, String> huffmanCodes, Map<Character, Integer> characterFrequencies) {
-        int initialVolume = text.length(); // Volume initial en octets
+        int initialVolume = text.length() * 8; // Volume initial en bits
 
         int finalVolumeBits = 0;
         for (Map.Entry<Character, Integer> entry : characterFrequencies.entrySet()) {
@@ -60,14 +62,14 @@ public class Etape4_5 {
             finalVolumeBits += frequency * codeLength;
         }
 
-        int finalVolume = (int) Math.ceil(finalVolumeBits / 8.0); // Convertir les bits en octets
+        int finalVolume = (int) Math.ceil((double) finalVolumeBits / 8.0); // Convertir les bits en octets
 
         return 1 - ((double) finalVolume / initialVolume);
     }
 
     public static double calculateAverageBitsPerCharacter(Map<Character, String> huffmanCodes, Map<Character, Integer> characterFrequencies) {
-        int totalBits = 0;
-        int totalCharacters = 0;
+        int totalBits = 0; // Nombre total de bits nécessaires pour stocker les caractères
+        int totalCharacters = 0; // Nombre total de caractères
 
         for (Map.Entry<Character, Integer> entry : characterFrequencies.entrySet()) {
             char character = entry.getKey();
@@ -97,5 +99,14 @@ public class Etape4_5 {
         // Calculer le nombre moyen de bits nécessaires pour stocker un caractère
         double averageBitsPerCharacter = calculateAverageBitsPerCharacter(huffmanCodes, characterFrequencies);
         System.out.println("Nombre moyen de bits par caractère : " + averageBitsPerCharacter);
+
+        // Écrire les résultats dans un fichier
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("compression_results.txt"))) {
+            writer.write("Taux de compression : " + compressionRate);
+            writer.newLine();
+            writer.write("Nombre moyen de bits par caractère : " + averageBitsPerCharacter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
